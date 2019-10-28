@@ -1,10 +1,11 @@
-package com.ruralsourcing.WeatherBoy.model;
+package com.ruralsourcing.WeatherBot.model;
 
 import com.google.gson.annotations.SerializedName;
 
 
-//StrObservation is the class model to hold the observations
-//where the value is of type String
+/**
+ * Class model for observations that hold String values
+ */
 public class StrObservation {
     @SerializedName("date_time")
     private String dateTime;

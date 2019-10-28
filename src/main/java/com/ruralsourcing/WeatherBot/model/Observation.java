@@ -1,7 +1,10 @@
-package com.ruralsourcing.WeatherBoy.model;
+package com.ruralsourcing.WeatherBot.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Each observation from each of the stations
+ */
 public class Observation {
 
     @SerializedName("wind_cardinal_direction_value_1d")

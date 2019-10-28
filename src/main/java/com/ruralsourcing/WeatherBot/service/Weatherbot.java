@@ -1,12 +1,21 @@
-package com.ruralsourcing.WeatherBoy.service;
+package com.ruralsourcing.WeatherBot.service;
 
 import com.google.gson.Gson;
-import com.ruralsourcing.WeatherBoy.model.ResponseModel;
+import com.ruralsourcing.WeatherBot.model.ResponseModel;
 
 import java.io.IOException;
 
-public class Weatherboy {
 
+/**
+ * Contains main method for WeatherBot app for Slack
+ */
+public class Weatherbot {
+
+    /**
+     * Uses a stored URL to contact a public API and retrieve/store information
+     *
+     * @param args ignored
+     */
     public static void main(String[] args){
 
         Gson gson = new Gson();
