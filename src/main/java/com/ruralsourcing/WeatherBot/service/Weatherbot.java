@@ -19,7 +19,6 @@ public class Weatherbot {
     public static void main(String[] args){
 
         Gson gson = new Gson();
-
         String httpResponse ="";
 
         try {
@@ -31,6 +30,10 @@ public class Weatherbot {
         //currentData holds the entire parsed JSON object
         //It holds all current information as an array of Stations and their data
         ResponseModel currentData = gson.fromJson(httpResponse, ResponseModel.class);
+
+
+        //System.out.println("Printing..." + System.getenv("SLACK_BOT_API_TOKEN"));
+        SlackIntegration.rtmMessage();
 
         System.out.println("Done");
     }
