@@ -12,4 +12,11 @@ public class ResponseModel {
     private Station[] stations;
 
     //TODO: Summary object
+
+
+    public Station[] getStations() {
+        return stations;
+    }
+
+    //TODO: Clean up call structure for Station info so it's clearer upon calling
 }

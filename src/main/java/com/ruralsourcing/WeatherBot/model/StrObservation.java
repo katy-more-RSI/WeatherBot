@@ -13,6 +13,10 @@ public class StrObservation {
     private String value;
 
 
+    @Override
+    public String toString() {
+        return value;
+    }
 }
 
 

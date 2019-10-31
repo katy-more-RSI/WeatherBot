@@ -33,7 +33,8 @@ public class Weatherbot {
 
 
         //System.out.println("Printing..." + System.getenv("SLACK_BOT_API_TOKEN"));
-        SlackIntegration.rtmMessage();
+        SlackIntegration.rtmMessage(currentData);
+
 
         System.out.println("Done");
     }

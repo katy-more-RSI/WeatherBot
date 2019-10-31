@@ -12,6 +12,11 @@ public class DblObservation {
     private String dateTime;
 
     private double value;
+
+    @Override
+    public String toString() {
+        return Double.toString(value);
+    }
 }
 
 //TODO: convert from String to Instant

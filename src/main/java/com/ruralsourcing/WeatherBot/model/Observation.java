@@ -21,4 +21,25 @@ public class Observation {
 
     @SerializedName("weather_condition_value_1d")
     private StrObservation weatherCondition;
+
+
+    public StrObservation getWindDirection() {
+        return windDirection;
+    }
+
+    public DblObservation getWindSpeed() {
+        return windSpeed;
+    }
+
+    public DblObservation getPrecipAccum1Hour() {
+        return precipAccum1Hour;
+    }
+
+    public DblObservation getAirTemperature() {
+        return airTemperature;
+    }
+
+    public StrObservation getWeatherCondition() {
+        return weatherCondition;
+    }
 }

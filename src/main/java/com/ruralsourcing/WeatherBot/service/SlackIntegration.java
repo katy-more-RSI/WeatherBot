@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.ruralsourcing.WeatherBot.model.ResponseModel;
 
 
 /**
@@ -17,7 +18,7 @@ public class SlackIntegration {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static final String TOKEN = System.getenv("SLACK_BOT_API_TOKEN");
 
-    public static void rtmMessage() {
+    public static void rtmMessage(ResponseModel currentData) {
 
         final Slack slack = Slack.getInstance();
 
@@ -45,7 +46,7 @@ public class SlackIntegration {
                     rtm.sendMessage(Message.builder()
                             .id(System.currentTimeMillis())
                             .channel(event.getChannel())
-                            .text("Hi")
+                            .text(currentDataString(currentData))
                             .build().toJSONString());
                 } else {
                     System.out.println("Not pinged");
@@ -63,5 +64,23 @@ public class SlackIntegration {
         } catch (Exception e) {
             System.out.println("Issue with the SlackIntegration class: \n" + e);
         }
+    }
+
+    public static String currentDataString(ResponseModel currentData){
+        String response = "";
+
+        response += "Hello! Here are the current observations from " + currentData.getStations()[0].getName() + "\n";
+        response += "The weather outside is "
+                + currentData.getStations()[0].getObservations().getWeatherCondition() + "\n";
+        response += "*Air temperature: * " + currentData.getStations()[0].getObservations().getAirTemperature()
+                + " degrees F" + "\n";
+        response += "*Wind speed: * " + currentData.getStations()[0].getObservations().getWindSpeed() + " mph" + "\n";
+        response += "*Wind direction: * " + currentData.getStations()[0].getObservations().getWindDirection() + "\n";
+        response += "*Precipitation over the last hour: * " + currentData.getStations()[0].getObservations()
+                .getPrecipAccum1Hour() + " inches" + "\n";
+
+        System.out.println(response);
+
+        return response;
     }
 }
