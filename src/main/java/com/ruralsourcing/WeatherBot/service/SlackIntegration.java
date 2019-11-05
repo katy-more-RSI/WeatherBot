@@ -69,9 +69,12 @@ public class SlackIntegration {
     public static String currentDataString(ResponseModel currentData){
         String response = "";
 
+        //Note: There is an issue right now where the weather condition (e.g. Snowy, Sunny, Overcast, etc) has not been
+        //      updated since October 31, so it is being omitted from the weather response for now
+
         response += "Hello! Here are the current observations from " + currentData.getStations()[0].getName() + "\n";
-        response += "The weather outside is "
-                + currentData.getStations()[0].getObservations().getWeatherCondition() + "\n";
+        //response += "The weather outside is "
+        //        + currentData.getStations()[0].getObservations().getWeatherCondition() + "\n";
         response += "*Air temperature: * " + currentData.getStations()[0].getObservations().getAirTemperature()
                 + " degrees F" + "\n";
         response += "*Wind speed: * " + currentData.getStations()[0].getObservations().getWindSpeed() + " mph" + "\n";
