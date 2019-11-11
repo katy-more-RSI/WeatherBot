@@ -10,20 +10,34 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.ruralsourcing.WeatherBot.model.ResponseModel;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 
 /**
  *
  */
-public class SlackIntegration {
+public class SlackIntegration implements Runnable {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static final String TOKEN = System.getenv("SLACK_BOT_API_TOKEN");
 
-    public static void rtmMessage(ResponseModel currentData) {
+    private final AtomicReference<ResponseModel> reference;
 
+    public SlackIntegration(AtomicReference<ResponseModel> reference) {
+        this.reference = reference;
+    }
+
+    @Override
+    public void run() {
+        rtmMessage();
+    }
+
+    private void rtmMessage() {
         final Slack slack = Slack.getInstance();
 
-        try (RTMClient rtm = new Slack().rtm(TOKEN)) {
+        try (final RTMClient rtm = slack.rtm(TOKEN)) {
             rtm.addMessageHandler((message) -> {
+                final ResponseModel currentData = reference.get();
+
                 JsonObject json = JsonParser.parseString(message).getAsJsonObject();
 
                 if (json.get("type") == null) {
@@ -41,26 +55,22 @@ public class SlackIntegration {
                 //do stuff in response:
                 System.out.println(event);
 
+                //If the message came from a DM or WeatherBot was pinged using @, respond
                 if(event.getText().contains("@UPXMYNW93") || event.getChannel().startsWith("D")){
-                    System.out.println("Pinged! Responding...");
                     rtm.sendMessage(Message.builder()
                             .id(System.currentTimeMillis())
                             .channel(event.getChannel())
                             .text(currentDataString(currentData))
                             .build().toJSONString());
-                } else {
-                    System.out.println("Not pinged");
                 }
-
             });
 
 
             rtm.connect();
 
-            while(true){
-                Thread.sleep(100);
+            while (true) {
+                Thread.onSpinWait();
             }
-
         } catch (Exception e) {
             System.out.println("Issue with the SlackIntegration class: \n" + e);
         }
@@ -82,7 +92,7 @@ public class SlackIntegration {
         response += "*Precipitation over the last hour: * " + currentData.getStations()[0].getObservations()
                 .getPrecipAccum1Hour() + " inches" + "\n";
 
-        System.out.println(response);
+        //System.out.println(response);
 
         return response;
     }
