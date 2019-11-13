@@ -18,12 +18,13 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class SlackIntegration implements Runnable {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private static final String TOKEN = System.getenv("SLACK_BOT_API_TOKEN");
 
     private final AtomicReference<ResponseModel> reference;
+    private final String slackbotApiToken;
 
-    public SlackIntegration(AtomicReference<ResponseModel> reference) {
+    public SlackIntegration(AtomicReference<ResponseModel> reference, final String slackbotApiToken) {
         this.reference = reference;
+        this.slackbotApiToken = slackbotApiToken;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class SlackIntegration implements Runnable {
     private void rtmMessage() {
         final Slack slack = Slack.getInstance();
 
-        try (final RTMClient rtm = slack.rtm(TOKEN)) {
+        try (final RTMClient rtm = slack.rtm(slackbotApiToken)) {
             rtm.addMessageHandler((message) -> {
                 final ResponseModel currentData = reference.get();
 

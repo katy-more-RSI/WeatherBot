@@ -17,7 +17,7 @@ import java.io.IOException;
 public class HttpCalls {
 
     //Mesonet URI for Will Rogers Airport
-    private static final String MESONET_OKC_URI = "http://api.synopticdata.com/v2/stations/latest?token=a989714fe0724e54bce070a06138ea46&stid=KOKC&units=temp%7CF,speed%7Cmph,precip%7Cin&vars=weather_condition,air_temp,wind_speed,wind_cardinal_direction,precip_accum_one_hour";
+    private static final String MESONET_OKC_URI = "http://api.synopticdata.com/v2/stations/latest?stid=KOKC&units=temp%7CF,speed%7Cmph,precip%7Cin&vars=weather_condition,air_temp,wind_speed,wind_cardinal_direction,precip_accum_one_hour";
     //TODO: make parameters customizable
 
     /**
@@ -26,11 +26,14 @@ public class HttpCalls {
      * @return results from http request as JSON
      * @throws IOException when http request fails
      */
-    public static String request() throws IOException{
+    public static String request(String mesonetApiToken) throws IOException{
         CloseableHttpClient httpClient = HttpClients.createDefault(); //The HTTP client that does the HTTP stuff
 
         try{
-            HttpGet httpGet = new HttpGet(MESONET_OKC_URI); //Turns the URI into an HTTP object
+            //add the API key to the URL from config.properties
+            String mesonetUrlWithToken = MESONET_OKC_URI + "&token=" + mesonetApiToken;
+
+            HttpGet httpGet = new HttpGet(mesonetUrlWithToken); //Turns the URI into an HTTP object
 
             //custom response handler
             ResponseHandler<String> responseHandler = new ResponseHandler<String>(){

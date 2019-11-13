@@ -204,3 +204,6 @@ gradle-app.setting
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
+
+# Ignore config.properties file as it contains API Tokens which should not be publicly shared
+config.properties
