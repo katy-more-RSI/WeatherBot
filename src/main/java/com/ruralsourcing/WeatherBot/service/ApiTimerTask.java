@@ -11,6 +11,7 @@ public class ApiTimerTask extends TimerTask {
 
     private final AtomicReference<ResponseModel> reference;
     private final String apiToken;
+    private static final Gson gson = new Gson();
 
     public ApiTimerTask(final AtomicReference<ResponseModel> reference, final String apiToken) {
 
@@ -22,7 +23,6 @@ public class ApiTimerTask extends TimerTask {
     public void run() {
         System.out.println("API Thread initiated: updating data from API...");
 
-        Gson gson = new Gson();
         String httpResponse ="";
 
         try {

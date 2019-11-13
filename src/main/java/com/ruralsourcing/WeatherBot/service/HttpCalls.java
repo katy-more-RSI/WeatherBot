@@ -17,7 +17,7 @@ import java.io.IOException;
 public class HttpCalls {
 
     //Mesonet URI for Will Rogers Airport
-    private static final String MESONET_OKC_URI = "http://api.synopticdata.com/v2/stations/latest?stid=KOKC&units=temp%7CF,speed%7Cmph,precip%7Cin&vars=weather_condition,air_temp,wind_speed,wind_cardinal_direction,precip_accum_one_hour";
+    private static final String MESONET_OKC_URI = "https://api.synopticdata.com/v2/stations/latest?stid=KOKC&units=temp%7CF,speed%7Cmph,precip%7Cin&vars=weather_condition,air_temp,wind_speed,wind_cardinal_direction,precip_accum_one_hour";
     //TODO: make parameters customizable
 
     /**
