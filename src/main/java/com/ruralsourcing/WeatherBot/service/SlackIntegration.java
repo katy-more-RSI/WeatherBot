@@ -12,7 +12,6 @@ import com.ruralsourcing.WeatherBot.model.ResponseModel;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-
 /**
  *
  */
@@ -65,7 +64,6 @@ public class SlackIntegration implements Runnable {
                             .build().toJSONString());
                 }
             });
-
 
             rtm.connect();
 

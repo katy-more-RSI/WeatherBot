@@ -22,7 +22,6 @@ public class Observation {
     @SerializedName("weather_condition_value_1d")
     private StringObservation weatherCondition;
 
-
     public StringObservation getWindDirection() {
         return windDirection;
     }

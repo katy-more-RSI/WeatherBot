@@ -2,7 +2,6 @@ package com.ruralsourcing.WeatherBot.model;
 
 import com.google.gson.annotations.SerializedName;
 
-
 /**
  * Class model for observations that hold double values
  */

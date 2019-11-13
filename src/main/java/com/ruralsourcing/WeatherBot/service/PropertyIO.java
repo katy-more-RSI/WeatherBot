@@ -11,7 +11,6 @@ public class PropertyIO {
     private String slackbotApiToken;
     private InputStream inputStream;
 
-
     public PropertyIO() throws IOException{
         try{
             Properties properties = new Properties();

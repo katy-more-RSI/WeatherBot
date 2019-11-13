@@ -16,7 +16,6 @@ public class ResponseModel {
         this.stations = stations;
     }
 
-
     public Station[] getStations() {
         return stations;
     }

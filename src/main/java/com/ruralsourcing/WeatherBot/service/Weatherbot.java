@@ -7,7 +7,6 @@ import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-
 /**
  * Contains main method for WeatherBot app for Slack
  */

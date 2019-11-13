@@ -12,12 +12,10 @@ public class StringObservation {
 
     private String value;
 
-
     @Override
     public String toString() {
         return value;
     }
 }
-
 
 //TODO: convert from String to Instant
