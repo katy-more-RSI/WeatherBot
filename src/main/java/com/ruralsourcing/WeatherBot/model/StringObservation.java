@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Class model for observations that hold String values
  */
-public class StrObservation {
+public class StringObservation {
     @SerializedName("date_time")
     private String dateTime;
 

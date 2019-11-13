@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Class model for observations that hold double values
  */
-public class DblObservation {
+public class DoubleObservation {
 
     @SerializedName("date_time")
     private String dateTime;

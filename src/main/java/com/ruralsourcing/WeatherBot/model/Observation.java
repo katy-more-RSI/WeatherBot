@@ -8,38 +8,38 @@ import com.google.gson.annotations.SerializedName;
 public class Observation {
 
     @SerializedName("wind_cardinal_direction_value_1d")
-    private StrObservation windDirection;
+    private StringObservation windDirection;
 
     @SerializedName("wind_speed_value_1")
-    private DblObservation windSpeed;
+    private DoubleObservation windSpeed;
 
     @SerializedName("precip_accum_one_hour_value_1")
-    private DblObservation precipAccum1Hour;
+    private DoubleObservation precipAccum1Hour;
 
     @SerializedName("air_temp_value_1")
-    private DblObservation airTemperature;
+    private DoubleObservation airTemperature;
 
     @SerializedName("weather_condition_value_1d")
-    private StrObservation weatherCondition;
+    private StringObservation weatherCondition;
 
 
-    public StrObservation getWindDirection() {
+    public StringObservation getWindDirection() {
         return windDirection;
     }
 
-    public DblObservation getWindSpeed() {
+    public DoubleObservation getWindSpeed() {
         return windSpeed;
     }
 
-    public DblObservation getPrecipAccum1Hour() {
+    public DoubleObservation getPrecipAccum1Hour() {
         return precipAccum1Hour;
     }
 
-    public DblObservation getAirTemperature() {
+    public DoubleObservation getAirTemperature() {
         return airTemperature;
     }
 
-    public StrObservation getWeatherCondition() {
+    public StringObservation getWeatherCondition() {
         return weatherCondition;
     }
 }
