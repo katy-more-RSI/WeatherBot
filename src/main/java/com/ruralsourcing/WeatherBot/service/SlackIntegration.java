@@ -13,7 +13,7 @@ import com.ruralsourcing.WeatherBot.model.ResponseModel;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- *
+ * This class contains methods needed to interact with the Slack API.
  */
 public class SlackIntegration implements Runnable {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -21,6 +21,12 @@ public class SlackIntegration implements Runnable {
     private final AtomicReference<ResponseModel> reference;
     private final String slackbotApiToken;
 
+    /**
+     * Constructor that will be used almost exclusively
+     *
+     * @param reference  the atomic reference for the current weather data object
+     * @param slackbotApiToken  API token needed to send/receive messages with the Slack API
+     */
     public SlackIntegration(AtomicReference<ResponseModel> reference, final String slackbotApiToken) {
         this.reference = reference;
         this.slackbotApiToken = slackbotApiToken;
@@ -68,10 +74,15 @@ public class SlackIntegration implements Runnable {
             rtm.connect();
 
             while (true) {
-                Thread.onSpinWait();
+                try {
+                    Thread.sleep(500);
+                }catch(final InterruptedException e){
+                    break;
+                }
             }
         } catch (Exception e) {
-            System.out.println("Issue with the SlackIntegration class: \n" + e);
+            System.err.println("Issue with the SlackIntegration class: ");
+            e.printStackTrace();
         }
     }
 

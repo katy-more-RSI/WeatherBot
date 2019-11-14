@@ -23,16 +23,16 @@ public class ApiTimerTask extends TimerTask {
     public void run() {
         System.out.println("API Thread initiated: updating data from API...");
 
-        String httpResponse ="";
 
         try {
-            httpResponse = HttpCalls.request(apiToken);
+            final String httpResponse = HttpCalls.request(apiToken);
+
+            //currentData holds the entire parsed JSON object
+            //It holds all current information as an array of Stations and their data
+            reference.set(gson.fromJson(httpResponse, ResponseModel.class));
         } catch(IOException e){
-            System.out.println(e);
+           e.printStackTrace();
         }
 
-        //currentData holds the entire parsed JSON object
-        //It holds all current information as an array of Stations and their data
-        reference.set(gson.fromJson(httpResponse, ResponseModel.class));
     }
 }

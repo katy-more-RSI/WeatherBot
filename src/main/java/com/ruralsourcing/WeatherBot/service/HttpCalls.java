@@ -27,9 +27,8 @@ public class HttpCalls {
      * @throws IOException when http request fails
      */
     public static String request(String mesonetApiToken) throws IOException{
-        CloseableHttpClient httpClient = HttpClients.createDefault(); //The HTTP client that does the HTTP stuff
 
-        try{
+        try(CloseableHttpClient httpClient = HttpClients.createDefault()){
             //add the API key to the URL from config.properties
             String mesonetUrlWithToken = MESONET_OKC_URI + "&token=" + mesonetApiToken;
 
@@ -57,14 +56,6 @@ public class HttpCalls {
             };
 
             return httpClient.execute(httpGet, responseHandler);
-        }
-        catch (IOException e){
-            System.out.println(e);
-            return null;
-        }
-        finally{
-            httpClient.close();
-
         }
     }
 }
