@@ -9,14 +9,11 @@ public class PropertyIO {
 
     private String mesonetApiToken;
     private String slackbotApiToken;
-    private InputStream inputStream;
+    private Properties properties = new Properties();
+    private String propertiesFileName = "config.properties";
 
     public PropertyIO() throws IOException{
-        try{
-            Properties properties = new Properties();
-            String propertiesFileName = "config.properties";
-
-            inputStream = getClass().getClassLoader().getResourceAsStream(propertiesFileName);
+        try(InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propertiesFileName)){
 
             if(inputStream != null){
                 properties.load(inputStream);
@@ -26,11 +23,9 @@ public class PropertyIO {
 
             mesonetApiToken = properties.getProperty("MESONET_API_TOKEN");
             slackbotApiToken = properties.getProperty("SLACK_BOT_API_TOKEN");
-        }catch(Exception e){
-            System.out.println(e);
-            //TODO: change this to log
-        }finally{
-            inputStream.close();
+        }catch(Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

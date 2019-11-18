@@ -17,6 +17,10 @@ public class ApiTimerTask extends TimerTask {
 
         this.reference = reference;
         this.apiToken = apiToken;
+
+        //do the initial run() call here to prevent a condition where someone can message Weatherbot
+        //before the API call is made
+        run();
     }
 
     @Override
