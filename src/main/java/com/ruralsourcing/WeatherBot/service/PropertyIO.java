@@ -9,10 +9,11 @@ public class PropertyIO {
 
     private String mesonetApiToken;
     private String slackbotApiToken;
-    private Properties properties = new Properties();
-    private String propertiesFileName = "config.properties";
+    private static final String propertiesFileName = "config.properties";
 
     public PropertyIO() throws IOException{
+        Properties properties = new Properties();
+
         try(InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propertiesFileName)){
 
             if(inputStream != null){
