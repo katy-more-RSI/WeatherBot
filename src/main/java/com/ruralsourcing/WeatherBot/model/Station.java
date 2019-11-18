@@ -15,4 +15,17 @@ public class Station {
 
     @SerializedName("OBSERVATIONS")
     private Observation observations;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getStid() {
+        return stid;
+    }
+
+    public Observation getObservations() {
+        return observations;
+    }
+
 }

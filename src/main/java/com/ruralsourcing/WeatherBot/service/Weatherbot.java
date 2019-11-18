@@ -1,10 +1,11 @@
 package com.ruralsourcing.WeatherBot.service;
 
-import com.google.gson.Gson;
 import com.ruralsourcing.WeatherBot.model.ResponseModel;
 
 import java.io.IOException;
-
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Contains main method for WeatherBot app for Slack
@@ -16,22 +17,22 @@ public class Weatherbot {
      *
      * @param args ignored
      */
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
 
-        Gson gson = new Gson();
+        //new object to hold api tokens from the properties file
+        //default constructor reads API tokens from config.properties
+        PropertyIO properties = new PropertyIO();
 
-        String httpResponse ="";
+        //initialize the atomic reference holding the data
+        final AtomicReference<ResponseModel> ref = new AtomicReference<>();
 
-        try {
-            httpResponse = HttpCalls.request();
-        } catch(IOException e){
-            System.out.println(e);
-        }
+        // Initialize timer thread that will update the data using API calls one time per hour
+        final Timer timer = new Timer("Timer", true);
+        timer.scheduleAtFixedRate(new ApiTimerTask(ref, properties.getMesonetApiToken()), 0, TimeUnit.HOURS.toMillis(1));
 
-        //currentData holds the entire parsed JSON object
-        //It holds all current information as an array of Stations and their data
-        ResponseModel currentData = gson.fromJson(httpResponse, ResponseModel.class);
-
-        System.out.println("Done");
+        final Thread thread = new Thread(new SlackIntegration(ref, properties.getSlackbotApiToken()));
+        thread.setDaemon(false);
+        thread.setName("Slack Thread");
+        thread.start();
     }
 }

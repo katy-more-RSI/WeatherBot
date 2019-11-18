@@ -17,7 +17,7 @@ import java.io.IOException;
 public class HttpCalls {
 
     //Mesonet URI for Will Rogers Airport
-    private static final String MESONET_OKC_URI = "https://api.synopticdata.com/v2/stations/latest?token=a989714fe0724e54bce070a06138ea46&stid=KOKC&recent=60&units=temp%7CF,speed%7Cmph,precip%7Cin";
+    private static final String MESONET_OKC_URI = "https://api.synopticdata.com/v2/stations/latest?stid=KOKC&units=temp%7CF,speed%7Cmph,precip%7Cin&vars=weather_condition,air_temp,wind_speed,wind_cardinal_direction,precip_accum_one_hour";
     //TODO: make parameters customizable
 
     /**
@@ -26,11 +26,13 @@ public class HttpCalls {
      * @return results from http request as JSON
      * @throws IOException when http request fails
      */
-    public static String request() throws IOException{
-        CloseableHttpClient httpClient = HttpClients.createDefault();
+    public static String request(String mesonetApiToken) throws IOException{
 
-        try{
-            HttpGet httpGet = new HttpGet(MESONET_OKC_URI);
+        try(CloseableHttpClient httpClient = HttpClients.createDefault()){
+            //add the API key to the URL from config.properties
+            String mesonetUrlWithToken = MESONET_OKC_URI + "&token=" + mesonetApiToken;
+
+            HttpGet httpGet = new HttpGet(mesonetUrlWithToken); //Turns the URI into an HTTP object
 
             //custom response handler
             ResponseHandler<String> responseHandler = new ResponseHandler<String>(){
@@ -41,7 +43,12 @@ public class HttpCalls {
 
                     if(status >= 200 && status < 300){
                         HttpEntity entity = response.getEntity();
-                        return entity != null ? EntityUtils.toString(entity) : null;
+                        if (entity != null) {
+                            String entityString = EntityUtils.toString(entity);
+                            return entityString;
+                        } else {
+                            throw new IOException("No entity found in response");
+                        }
                     } else {
                         throw new ClientProtocolException("Unexpected response status: " + status);
                     }
@@ -49,14 +56,6 @@ public class HttpCalls {
             };
 
             return httpClient.execute(httpGet, responseHandler);
-        }
-        catch (IOException e){
-            System.out.println(e);
-            return null;
-        }
-        finally{
-            httpClient.close();
-
         }
     }
 }
