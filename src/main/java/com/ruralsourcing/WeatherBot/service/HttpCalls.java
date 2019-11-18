@@ -47,7 +47,7 @@ public class HttpCalls {
                             String entityString = EntityUtils.toString(entity);
                             return entityString;
                         } else {
-                            return null;
+                            throw new IOException("No entity found in response");
                         }
                     } else {
                         throw new ClientProtocolException("Unexpected response status: " + status);

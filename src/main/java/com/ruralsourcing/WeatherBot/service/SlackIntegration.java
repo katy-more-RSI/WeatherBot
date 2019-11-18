@@ -41,8 +41,13 @@ public class SlackIntegration implements Runnable {
         final Slack slack = Slack.getInstance();
 
         try (final RTMClient rtm = slack.rtm(slackbotApiToken)) {
-            rtm.addMessageHandler((message) -> {
+
+
+            //Message handler
+            rtm.addMessageHandler(message -> {
                 final ResponseModel currentData = reference.get();
+
+                final String slackUserHandle = rtm.getConnectedBotUser().getId();
 
                 JsonObject json = JsonParser.parseString(message).getAsJsonObject();
 
@@ -61,8 +66,9 @@ public class SlackIntegration implements Runnable {
                 //do stuff in response:
                 System.out.println(event);
 
+
                 //If the message came from a DM or WeatherBot was pinged using @, respond
-                if(event.getText().contains("@UPXMYNW93") || event.getChannel().startsWith("D")){
+                if(event.getText().contains("@" + slackUserHandle) || event.getChannel().startsWith("D")){
                     rtm.sendMessage(Message.builder()
                             .id(System.currentTimeMillis())
                             .channel(event.getChannel())
